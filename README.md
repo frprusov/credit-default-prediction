@@ -29,9 +29,9 @@ previous baseline:
 |------|------------------------------|---------------------|---------|
 | 1    | 10 numeric main-table only   | Logistic regression | 0.62    |
 | 2    | + all categorical            | Logistic regression | 0.66    |
-| 3    | + all main-table features    | Logistic regression | 0.70    |
-| 4    | + bureau aggregations        | Logistic regression | 0.72    |
-| 5    | + previous_application       | Logistic regression | 0.73    |
+| 3    | + all main-table features    | Logistic regression | 0.74    |
+| 4    | + bureau aggregations        | Logistic regression | 0.75    |
+| 5    | + previous_application       | Logistic regression | 0.76    |
 | 6    | Same features                | LightGBM            | in progress |
 
 Deliberate choices worth noting:
