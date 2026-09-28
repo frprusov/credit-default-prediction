@@ -37,8 +37,8 @@ Base default rate is 8.1%.
 
 ## Results
 
-Each step is measured against the previous one, so the contribution of every
-addition is visible:
+Each step is measured against the previous one on a single 80/20 split, so the
+contribution of every addition is visible:
 
 | Step | Features | Model | AUC-ROC |
 |------|----------|-------|---------|
@@ -51,9 +51,32 @@ addition is visible:
 
 AUC-PR on the final model is 0.26, against a random baseline of 0.08.
 
-The logistic regression baseline is not decoration. Without it, an AUC of 0.77
-is a number with no reference point; with it, the 0.04 gain from switching to
-gradient boosting is a measured result that justifies the added complexity.
+### Cross-validated comparison
+
+![Cross-validated AUC](reports/cv_comparison.png)
+
+Single-split numbers carry no error bars, so the final two rows were re-measured
+with 5-fold stratified cross-validation over the full dataset, both models sharing
+the same folds:
+
+| Model | AUC-ROC |
+|-------|---------|
+| Logistic regression | 0.7545 ± 0.0042 |
+| LightGBM | 0.7668 ± 0.0036 |
+| **Paired gain** | **0.0122 ± 0.0013**, LightGBM ahead in 5/5 folds |
+
+**This revised the headline result downward.** On the single split the gap looked
+like 0.04; under cross-validation with matched preprocessing it is 0.012. The
+difference was not noise — the fold-to-fold spread is only 0.004 — but a weaker
+logistic regression baseline in the single-split notebook. Comparing a tuned model
+against a carelessly built baseline inflates the apparent gain, and that is
+exactly what a cross-validated comparison is for.
+
+The gain that survives is still unambiguous: roughly nine times the spread of the
+paired difference, and consistent in every fold. Because both models saw identical
+folds, the per-fold difference cancels the variation caused by the split itself —
+which is why its standard deviation (0.0013) is three times smaller than that of
+either model's own score.
 
 ## Calibration
 
@@ -186,7 +209,8 @@ credit-default-prediction/
 │   ├── 05_previous_app_features.ipynb
 │   ├── 06_lightgbm.ipynb
 │   ├── 07_calibration_shap.ipynb
-│   └── 08_fairness.ipynb
+│   ├── 08_fairness.ipynb
+│   └── 09_cross_validation.ipynb
 ├── src/
 │   └── features.py               # multi-table aggregation and feature assembly
 ├── reports/                      # figures
@@ -206,7 +230,6 @@ notebooks in order.
 
 ## Planned work
 
-- Cross-validated error bars instead of single-split point estimates
 - A reproducible training script (`train.py`) reproducing the final model from
   the command line
 
