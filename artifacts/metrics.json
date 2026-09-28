@@ -1,9 +1,0 @@
-{
-  "n_test": 61503,
-  "base_rate": 0.08072776937710356,
-  "auc_roc": 0.7666679028127025,
-  "auc_pr": 0.2495698313002941,
-  "brier_uncalibrated": 0.16511689896183443,
-  "brier_calibrated": 0.06711972394278794,
-  "brier_constant_baseline": 0.07421079662850075
-}
